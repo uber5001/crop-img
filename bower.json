@@ -1,0 +1,26 @@
+{
+  "name": "crop-img",
+  "version": "0.0.0",
+  "homepage": "https://github.com/uber5001/crop-img",
+  "authors": [
+    "Scott Little <uber5001@gmail.com>"
+  ],
+  "description": "A Polymer element for cropping images and displaying them.",
+  "main": "crop-img.html",
+  "keywords": [
+    "crop",
+    "image",
+    "element"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#~0.5.4"
+  }
+}

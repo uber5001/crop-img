@@ -1,0 +1,127 @@
+<link rel="import" href="../polymer/polymer.html">
+
+<polymer-element name="crop-img" attributes="
+	width
+	height
+	ratio
+	top
+	left
+	disabled
+	src
+	alt
+">
+	<template>
+		<style>
+			:host {
+				display: block;
+				height: {{height}}px;
+				width: {{width}}px;
+				background-color: rgba(127,127,127,0.5);
+				overflow: hidden;
+				position: relative;
+			}
+			#img {
+				left:{{-left/_imgWidth*100}}%;
+				top:{{-top/_imgHeight*100}}%;
+				width:{{_imgWidth/width*100}}%;
+				height:{{_imgHeight/height*100}}%;
+				position: absolute;
+			}
+			#controls {
+				position: absolute;
+				top: 0;
+				right: 0;
+				text-align: right;
+				max-width: 100%;
+			}
+			#controls input {
+				max-width: 100%;
+			}
+		</style>
+		<img id="img" src="{{src}}" alt="{{alt}}">
+		<template if="{{!disabled}}">
+			<div id="controls">
+				Left: <input type="number" value="{{left}}"><br>
+				Top: <input type="number" value="{{top}}"><br>
+				Width: <input type="number" value="{{width}}"><br>
+				Height: <input type="number" value="{{height}}"><br>
+			</div>
+		</template>
+	</template>
+	<script>
+		Polymer({
+			ready: function() {
+				var self = this;
+				this.$.img.onload = function() {
+					self._imgWidth = self.$.img.naturalWidth;
+					self._imgHeight= self.$.img.naturalHeight;
+
+					self._top = true;
+					self._left = true;
+					self._width = true;
+					self._height = true;
+					self._ratio = true;
+
+					self.width = self._imgWidth;
+					self.height = self._imgHeight;
+					self.top = 0;
+					self.left = 0;
+					self.ratio = self._imgWidth/self._imgHeight;
+				}
+			},
+			_imgWidth: 100,
+			_imgHeight: 100,
+			widthChanged: function(oldValue, newValue) {
+				if (this._width) {
+					this._width = false;
+					return;
+				}
+				if (this.ratio) {
+					this._height = true;
+					this.height = this.width/this.ratio;
+				}
+			},
+			heightChanged: function(oldValue, newValue) {
+				if (this._height) {
+					this._height = false;
+					return;
+				}
+				if (this.ratio) {
+					this._width = true;
+					this.width = this.height*this.ratio;
+				}
+			},
+			ratioChanged: function(oldValue, newValue) {
+				if (this._ratio) {
+					this._ratio = false;
+					return;
+				}
+				if (this.ratio) {
+					this._height = true;
+					this.height = this.width/this.ratio;
+				}
+			},
+			topChanged: function(oldValue, newValue) {
+				if (this._top) {
+					this._top = false;
+					return;
+				}
+			},
+			leftChanged: function(oldValue, newValue) {
+				if (this._left) {
+					this._left = false;
+					return;
+				}
+			},
+			disabledChanged: function(oldValue, newValue) {
+				
+			},
+			_width: false,
+			_height: false,
+			_ratio: false,
+			_top: false,
+			_left: false,
+			_disabled: false
+		});
+	</script>
+</polymer-element>
