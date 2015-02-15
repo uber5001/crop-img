@@ -62,10 +62,10 @@
 					self._height = true;
 					self._ratio = true;
 
-					self.width = self._imgWidth;
-					self.height = self._imgHeight;
-					self.top = 0;
-					self.left = 0;
+					self.width = self.width || self._imgWidth;
+					self.height = self.height || self._imgHeight;
+					self.top = self.top || 0;
+					self.left = self.left || 0;
 					self.ratio = self._imgWidth/self._imgHeight;
 				}
 			},
@@ -114,14 +114,28 @@
 				}
 			},
 			disabledChanged: function(oldValue, newValue) {
-				
+				if (this._disabled) {
+					this._disabled = false;
+					return;
+				}
+				this._enabled = true;
+				this.enabled = !this.disabled;
+			},
+			enabledChanged: function(oldValue, newValue) {
+				if (this._enabled) {
+					this._enabled = false;
+					return;
+				}
+				this._disabled = true;
+				this.disabled = !this.enabled;
 			},
 			_width: false,
 			_height: false,
 			_ratio: false,
 			_top: false,
 			_left: false,
-			_disabled: false
+			_disabled: false,
+			_enabled: false
 		});
 	</script>
 </polymer-element>
